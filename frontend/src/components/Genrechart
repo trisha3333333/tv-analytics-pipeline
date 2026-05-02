@@ -1,0 +1,22 @@
+import React from 'react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+
+const COLORS = ['#6c63ff', '#7c73ff', '#8c83ff', '#9c93ff', '#ac93ff'];
+
+export default function GenreChart({ data }) {
+  return (
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={data} layout="vertical" margin={{ left: 80, right: 20 }}>
+        <XAxis type="number" domain={[0, 10]} tick={{ fill: '#888', fontSize: 12 }} />
+        <YAxis type="category" dataKey="genre_name" tick={{ fill: '#ccc', fontSize: 12 }} width={80} />
+        <Tooltip
+          contentStyle={{ background: '#1a1d2e', border: '1px solid #2a2d3a', borderRadius: '8px', color: '#fff' }}
+          formatter={(val) => [`${val} / 10`, 'Avg Rating']}
+        />
+        <Bar dataKey="avg_rating" radius={[0, 4, 4, 0]}>
+          {data.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
+  );
+}
