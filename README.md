@@ -1,11 +1,11 @@
 # TV Show Ratings Analytics Pipeline
 
-An end-to-end data engineering project that extracts TV show data from the TMDB API, transforms and loads it into an AWS S3 data lake, queries it with AWS Athena, and visualizes insights in a Power BI dashboard.
+An end-to-end data engineering project that extracts TV show data from the TMDB API, transforms and loads it into an AWS S3 data lake, queries it with AWS Athena, and visualizes insights in a AWS QuickSight dashboard.
 
 ## Architecture
 
 ```
-TMDB API → Python ETL Pipeline → AWS S3 (Data Lake) → AWS Athena → Power BI Dashboard
+TMDB API → Python ETL Pipeline → AWS S3 (Data Lake) → AWS Athena → AWS QuickSight Dashboard
 ```
 
 ## Tech Stack
@@ -17,7 +17,7 @@ TMDB API → Python ETL Pipeline → AWS S3 (Data Lake) → AWS Athena → Power
 | Storage | AWS S3 (data lake) |
 | Querying | AWS Athena (serverless SQL) |
 | Cataloging | AWS Glue (schema management) |
-| Visualization | Power BI |
+| Visualization | AWS QuickSight |
 | Scheduling | Python `schedule` library |
 
 ## Data Schema
@@ -97,7 +97,7 @@ python scheduler.py
 ```
 
 ## Dashboard
-See `dashboard/README.md` for Power BI connection and setup instructions.
+See `dashboard/README.md` for AWS QuickSight connection and setup instructions.
 
 ## Project Structure
 ```
@@ -114,5 +114,5 @@ tv-analytics-pipeline/
 ├── athena_queries/
 │   └── setup.sql         # Athena table creation + analysis queries
 └── dashboard/
-    └── README.md         # Power BI connection guide
+    └── README.md         # AWS QuickSight connection guide
 ```
