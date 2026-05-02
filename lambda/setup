@@ -1,0 +1,45 @@
+# Lambda + API Gateway Setup Guide
+
+## Step 1 — Create the Lambda Function
+1. Go to AWS Console → **Lambda** → **Create function**
+2. Choose **Author from scratch**
+3. Name: `tv-analytics-query`
+4. Runtime: **Python 3.11**
+5. Click **Create function**
+
+## Step 2 — Upload the Lambda Code
+1. In the Lambda console, scroll to **Code source**
+2. Click **Upload from** → **.zip file**
+3. Zip the `lambda/query_athena.py` file and upload it
+4. Set Handler to: `query_athena.lambda_handler`
+
+## Step 3 — Set Lambda Permissions
+1. Go to **Configuration** → **Permissions** → click the Role name
+2. Click **Add permissions** → **Attach policies**
+3. Add: `AmazonAthenaFullAccess` and `AmazonS3FullAccess`
+
+## Step 4 — Set Environment Variables
+1. Go to **Configuration** → **Environment variables**
+2. Add: `AWS_REGION` = `us-east-2`
+
+## Step 5 — Create API Gateway
+1. Go to AWS Console → **API Gateway** → **Create API**
+2. Choose **HTTP API** → **Build**
+3. Click **Add integration** → **Lambda**
+4. Select your `tv-analytics-query` function
+5. Click **Next** → configure route: `GET /` 
+6. Click **Next** → **Next** → **Create**
+7. Copy the **Invoke URL** — you'll need this
+
+## Step 6 — Update React App
+1. Open `frontend/src/App.js`
+2. Replace `https://your-api-gateway-url.amazonaws.com/prod` with your actual Invoke URL
+
+## Step 7 — Deploy to Amplify
+1. Go to AWS Console → **Amplify** → **New app** → **Host web app**
+2. Connect to GitHub → select `tv-analytics-pipeline` repo
+3. Branch: `main`
+4. Amplify will detect `amplify.yml` automatically
+5. Add environment variable: `REACT_APP_API_URL` = your API Gateway URL
+6. Click **Save and deploy**
+7. Amplify gives you a live URL like `https://main.xxxxx.amplifyapp.com`
