@@ -1,11 +1,14 @@
 # TV Show Ratings Analytics Pipeline
 
-An end-to-end data engineering project that extracts TV show data from the TMDB API, transforms and loads it into an AWS S3 data lake, queries it with AWS Athena, and visualizes insights in a AWS QuickSight dashboard.
+An end-to-end data engineering project that extracts TV show data from the TMDB API, transforms and loads it into an AWS S3 data lake, queries it with AWS Athena, and visualizes insights in a live React dashboard deployed on AWS Amplify.
+
+## 🚀 Live Dashboard
+**[https://main.d1j80mhkaqzs3m.amplifyapp.com/](https://main.d1j80mhkaqzs3m.amplifyapp.com/)**
 
 ## Architecture
 
 ```
-TMDB API → Python ETL Pipeline → AWS S3 (Data Lake) → AWS Athena → AWS QuickSight Dashboard
+TMDB API → Python ETL Pipeline → AWS S3 (Data Lake) → AWS Athena → AWS Lambda → API Gateway → React Dashboard → AWS Amplify
 ```
 
 ## Tech Stack
@@ -16,8 +19,9 @@ TMDB API → Python ETL Pipeline → AWS S3 (Data Lake) → AWS Athena → AWS Q
 | Transformation | Python, Pandas |
 | Storage | AWS S3 (data lake) |
 | Querying | AWS Athena (serverless SQL) |
-| Cataloging | AWS Glue (schema management) |
-| Visualization | AWS QuickSight |
+| Backend API | AWS Lambda + API Gateway |
+| Visualization | React, Recharts |
+| Hosting | AWS Amplify |
 | Scheduling | Python `schedule` library |
 
 ## Data Schema
@@ -60,59 +64,7 @@ TMDB API → Python ETL Pipeline → AWS S3 (Data Lake) → AWS Athena → AWS Q
 | air_date | DATE | Season premiere date |
 | vote_average | DOUBLE | Season rating |
 
-## Setup & Installation
-
-### 1. Clone the repo
-```bash
-git clone https://github.com/yourusername/tv-analytics-pipeline.git
-cd tv-analytics-pipeline
-```
-
-### 2. Install dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Configure environment variables
-```bash
-cp .env.example .env
-```
-Edit `.env` and fill in your:
-- TMDB API key (get one free at themoviedb.org)
-- AWS credentials (Access Key ID + Secret)
-- S3 bucket name
-
-### 4. Set up Athena tables
-- Open AWS Athena console
-- Run each query in `athena_queries/setup.sql` in order
-
-### 5. Run the pipeline
-```bash
-python pipeline.py
-```
-
-### 6. Run on a schedule (daily refresh)
-```bash
-python scheduler.py
-```
 
 ## Dashboard
-See `dashboard/README.md` for AWS QuickSight connection and setup instructions.
+The React dashboard is live at **[https://main.d1j80mhkaqzs3m.amplifyapp.com/](https://main.d1j80mhkaqzs3m.amplifyapp.com/)** and is powered by AWS Lambda + API Gateway querying Athena in real time.
 
-## Project Structure
-```
-tv-analytics-pipeline/
-├── pipeline.py           # Main ETL runner
-├── extract.py            # TMDB API extraction
-├── transform.py          # Data cleaning & transformation
-├── load.py               # AWS S3 upload
-├── scheduler.py          # Automated daily refresh
-├── config.py             # Environment config
-├── requirements.txt      
-├── .env.example          # Credentials template
-├── .gitignore            
-├── athena_queries/
-│   └── setup.sql         # Athena table creation + analysis queries
-└── dashboard/
-    └── README.md         # AWS QuickSight connection guide
-```
