@@ -5,7 +5,7 @@ import NetworkChart from './components/NetworkChart';
 import TrendsChart from './components/TrendsChart';
 
 // Replace this with your actual API Gateway URL after deploying Lambda
-const API_URL = process.env.REACT_APP_API_URL || 'https://your-api-gateway-url.amazonaws.com/prod';
+const API_URL = process.env.REACT_APP_API_URL || 'https://4gnepc2fxa.execute-api.us-east-1.amazonaws.com';
 
 const fetchData = async (query) => {
   const res = await fetch(`${API_URL}?query=${query}`);
