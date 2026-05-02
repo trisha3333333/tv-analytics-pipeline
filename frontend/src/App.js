@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import TopShows from './components/TopShows';
-import GenreChart from './components/GenreChart';
-import NetworkChart from './components/NetworkChart';
-import TrendsChart from './components/TrendsChart';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
+const TopShows = lazy(() => import('./components/TopShows'));
+const GenreChart = lazy(() => import('./components/GenreChart'));
+const NetworkChart = lazy(() => import('./components/NetworkChart'));
+const TrendsChart = lazy(() => import('./components/TrendsChart'));
 
 // Replace this with your actual API Gateway URL after deploying Lambda
 const API_URL = process.env.REACT_APP_API_URL || 'https://4gnepc2fxa.execute-api.us-east-1.amazonaws.com';
@@ -90,25 +90,33 @@ export default function App() {
       <div style={styles.gridFull}>
         <div style={styles.card}>
           <div style={styles.cardTitle}>📈 Rating Trends by Year</div>
-          <TrendsChart data={trends} />
+          <Suspense fallback={<div style={{color:'#888'}}>Loading...</div>}>
+            <TrendsChart data={trends} />
+          </Suspense>
         </div>
       </div>
 
       <div style={styles.grid}>
         <div style={styles.card}>
           <div style={styles.cardTitle}>🎭 Average Rating by Genre</div>
-          <GenreChart data={genres} />
+          <Suspense fallback={<div style={{color:'#888'}}>Loading...</div>}>
+            <GenreChart data={genres} />
+          </Suspense>
         </div>
         <div style={styles.card}>
           <div style={styles.cardTitle}>📡 Top Networks by Show Count</div>
-          <NetworkChart data={networks} />
+          <Suspense fallback={<div style={{color:'#888'}}>Loading...</div>}>
+            <NetworkChart data={networks} />
+          </Suspense>
         </div>
       </div>
 
       <div style={styles.gridFull}>
         <div style={styles.card}>
           <div style={styles.cardTitle}>⭐ Top Rated Shows</div>
-          <TopShows data={topShows} />
+          <Suspense fallback={<div style={{color:'#888'}}>Loading...</div>}>
+            <TopShows data={topShows} />
+          </Suspense>
         </div>
       </div>
     </div>
