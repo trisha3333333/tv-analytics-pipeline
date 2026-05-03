@@ -5,7 +5,7 @@ const NetworkChart = lazy(() => import('./components/NetworkChart'));
 const TrendsChart = lazy(() => import('./components/TrendsChart'));
 
 // Replace this with your actual API Gateway URL after deploying Lambda
-const API_URL = process.env.REACT_APP_API_URL || 'https://4gnepc2fxa.execute-api.us-east-1.amazonaws.com';
+const API_URL = process.env.REACT_APP_API_URL || 'https://9g7x9w3k91.execute-api.us-east-2.amazonaws.com';
 
 const fetchData = async (query) => {
   const res = await fetch(`${API_URL}?query=${query}`);
