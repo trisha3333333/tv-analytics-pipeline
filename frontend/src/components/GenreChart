@@ -1,22 +1,23 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
-const COLORS = ['#6c63ff', '#7c73ff', '#8c83ff', '#9c93ff', '#ac93ff'];
+const BAR_COLORS = ['#6c63ff','#7c73ff','#8c83ff','#9c93ff','#ac93ff','#bc93ff','#cc93ff','#dc93ff','#6c83ff','#6c93ff','#6ca3ff','#6cb3ff','#6cc3ff','#6cd3ff','#6ce3ff'];
 
 export default function GenreChart({ data }) {
+  if (!data || data.length === 0) return null;
+  const max = Math.max(...data.map(d => parseFloat(d.avg_rating)));
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={data} layout="vertical" margin={{ left: 80, right: 20 }}>
-        <XAxis type="number" domain={[0, 10]} tick={{ fill: '#888', fontSize: 12 }} />
-        <YAxis type="category" dataKey="genre_name" tick={{ fill: '#ccc', fontSize: 12 }} width={80} />
-        <Tooltip
-          contentStyle={{ background: '#1a1d2e', border: '1px solid #2a2d3a', borderRadius: '8px', color: '#fff' }}
-          formatter={(val) => [`${val} / 10`, 'Avg Rating']}
-        />
-        <Bar dataKey="avg_rating" radius={[0, 4, 4, 0]}>
-          {data.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer>
+    <div style={{ width: '100%' }}>
+      {data.map((item, i) => (
+        <div key={i} style={{ marginBottom: '10px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+            <span style={{ fontSize: '13px', color: '#ccc' }}>{item.genre_name}</span>
+            <span style={{ fontSize: '13px', color: '#aaa' }}>{parseFloat(item.avg_rating).toFixed(2)}</span>
+          </div>
+          <div style={{ background: '#2a2d3a', borderRadius: '4px', height: '8px', width: '100%' }}>
+            <div style={{ background: BAR_COLORS[i % BAR_COLORS.length], height: '8px', borderRadius: '4px', width: `${(parseFloat(item.avg_rating) / max) * 100}%` }} />
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
